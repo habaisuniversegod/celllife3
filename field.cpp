@@ -147,9 +147,9 @@ int_fast64_t Field::get_photo_energy(uint_fast64_t x, uint_fast64_t y)
 {
     static int_fast64_t photo_energy_by_season[16] = 
     {12, 12, 11, 10, 9, 8, 7, 6, 6, 6, 7, 8, 9, 10, 11, 12};
-    int_fast64_t season_max = photo_energy_by_season[season_ctr / 2500] + 2;
+    int_fast64_t season_max = photo_energy_by_season[season_ctr / 2500];
     int_fast64_t distance = max(abs_(FIELD_WIDTH / 2 - x), abs_(FIELD_HEIGHT / 2 - y));
-    int_fast64_t energy = FIELD_WIDTH * 3 / 8 - distance;
+    int_fast64_t energy = (FIELD_WIDTH * 7 / 16 - distance) / 5;
     return energy > season_max ? season_max : (energy < season_max ? 0 : energy);
 }
 
