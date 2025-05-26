@@ -17,8 +17,11 @@ enum Genes {
     G_NOTHING_FORWARD, G_FOOD_FORWARD, G_BRO_FORWARD, G_NOT_BRO_FORWARD, G_TRUE, G_FALSE, G_IS_ATTACKED, G_IS_COLLIDED, G_IS_GOT_ENERGY, G_NEXT
 };
 
+int main();
+
 class Cell {
     friend Field;
+    friend int main();
 
     uint_fast64_t genome[650];
     uint_fast64_t active_gene;
@@ -43,7 +46,7 @@ class Cell {
     sf::Color color;
     double damage_absorption;
     double attack_efficiency;
-    double reproduction_threshold;
+    uint_fast64_t reproduction_threshold;
     uint_fast64_t max_energy;
     double mutation_prob;
     uint_fast64_t relation_threshold;
@@ -78,5 +81,7 @@ public:
     static void get_cell_color(Cell* cell, sf::Color* color);
 
     void step(Field* field);
-    void organic_step(Field* field);
+    //void organic_step(Field* field);
+    sf::Vector2i get_coords();
+    uint_fast64_t is_alive();
 };

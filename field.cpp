@@ -155,7 +155,7 @@ int_fast64_t Field::get_photo_energy(uint_fast64_t x, uint_fast64_t y)
 
 void Field::simulate_step()
 {
-    season_ctr++;
+    season_ctr = (season_ctr + 1) % 40000;
     total_steps++;
     if (!cells_count) return;
     uint_fast64_t i = tq_a;

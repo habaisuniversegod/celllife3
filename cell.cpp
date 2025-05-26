@@ -49,8 +49,8 @@ void Cell::init_genes()
     color = hsv2rgb(GENE_RANGE(0), 0.66, 0.85);
     damage_absorption = GENE_RANGE(1) * 0.33;
     attack_efficiency = TO_RANGE(GENE_RANGE(2), 1.0, 1.25);
-    reproduction_threshold = TO_RANGE(GENE_RANGE(3), 0.66, 0.9);
     max_energy = TO_RANGE(GENE_RANGE(4), 1000, 1750);
+    reproduction_threshold = max_energy * TO_RANGE(GENE_RANGE(3), 0.66, 0.9);
     mutation_prob = TO_RANGE(GENE_RANGE(5), 0.1, 0.5);
     relation_threshold = TO_RANGE(GENE_RANGE(6), 600, 650);
     body_nutrition = TO_RANGE(GENE_RANGE(7), 0.0075, 0.03);
@@ -437,12 +437,22 @@ void Cell::step(Field* field)
     if (action_counter <= 0) goto finalize_cell_step;
     act(field, G_TRUE + condition);
 
-    active_gene = genome[active_gene * 10 + G_NEXT];
-
+    
     finalize_cell_step:
+    active_gene = genome[active_gene * 10 + G_NEXT];
     age++;
     last_reproducted_counter++;
     last_attacked_counter++;
     energy--;
     delta_energy = energy - last_energy;
+}
+
+sf::Vector2i Cell::get_coords()
+{
+    return sf::Vector2i(pos_x, pos_y);
+}
+
+uint_fast64_t Cell::is_alive()
+{
+    return state == S_ALIVE;
 }
